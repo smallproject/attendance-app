@@ -1,5 +1,6 @@
 package nl.smallproject.www.attendanceapp.services;
 
+import jakarta.transaction.Transactional;
 import nl.smallproject.www.attendanceapp.dtos.UserDto;
 import nl.smallproject.www.attendanceapp.mappers.UserMapper;
 import nl.smallproject.www.attendanceapp.models.User;
@@ -44,5 +45,10 @@ public class UserService {
         }
 
         return userMapper.toDTO(user.get());
+    }
+
+    @Transactional
+    public void deleteBook(long id) {
+        userRepository.deleteById(id);
     }
 }
