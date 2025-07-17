@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -32,5 +33,16 @@ public class UserService {
             userDtos.add(userMapper.toDTO(user));
         }
         return userDtos;
+    }
+
+    public UserDto getUserById(long id) {
+        Optional<User> user = Optional.ofNullable(userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with this id: " + id)));
+
+        if (!user.isPresent()) {
+            throw new RuntimeException("User not found with this id: " + id);
+        }
+
+        return userMapper.toDTO(user.get());
     }
 }
