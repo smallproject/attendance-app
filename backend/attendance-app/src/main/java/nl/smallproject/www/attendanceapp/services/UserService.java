@@ -6,6 +6,9 @@ import nl.smallproject.www.attendanceapp.models.User;
 import nl.smallproject.www.attendanceapp.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -20,5 +23,14 @@ public class UserService {
         User user = userMapper.toEntity(userDto);
         userRepository.save(user);
         return user;
+    }
+
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User user : users) {
+            userDtos.add(userMapper.toDTO(user));
+        }
+        return userDtos;
     }
 }
