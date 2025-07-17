@@ -43,4 +43,10 @@ public class UserController {
 
         return ResponseEntity.created(location).eTag(String.valueOf(HttpStatus.CREATED.value())).body(newUser);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable long id) {
+        userService.deleteBook(id);
+        return ResponseEntity.noContent().build();
+    }
 }
